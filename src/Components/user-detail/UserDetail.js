@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function UserDetail({user}) {
+export default function UserDetail(props) {
+    let {detail} = props;
     return (
         <div className="container">
             <div className="row">
@@ -8,12 +9,12 @@ export default function UserDetail({user}) {
                     <div className="well profile">
                         <div className="col-sm-12">
                             <div className="col-xs-12 col-sm-8">
-                                <h2>{user.name}</h2>
-                                <p><strong>About: </strong>{user.about}</p>
-                                <p><strong>Hobbies: </strong>{user.hobby}</p>
+                                <h2>{detail.name}</h2>
+                                <p><strong>About: </strong>{detail.about}</p>
+                                <p><strong>Hobbies: </strong>{detail.hobby}</p>
                                 <p><strong>Skills: </strong>
-                                    {user.skills.map((s, i) => (
-                                        <span className="tags" key={i}>{s}&nbsp;</span>
+                                    {detail.skills.map((skill, i) => (
+                                        <span className="tags" key={i}>{skill}&nbsp;</span>
                                     ))}
                                 </p>
                             </div>
