@@ -1,22 +1,28 @@
-const gridRecords = [
-    {id: 1, firstName: "John", lastName: "Doe", active: false},
-    {id: 2, firstName: "Mary", lastName: "Moe", active: false},
-    {id: 3, firstName: "Peter", lastName: "Noname", active: true}
-];
+import * as types from "../Constants";
 
 let gridInitState = {
-    records: [...gridRecords],
-    filter: ''
+    records: [],
+    filter: '',
+    loading: false
 }
 
 export function gridReducer(state = gridInitState, action) {
     switch (action.type) {
-        case "FILTER": {
+        case types.ADD_DATA: {
+            return {...state, records: [...action.value]};
+        }
+        case types.FILTER: {
             let newState = {...state};
             newState.filter = action.value;
             return newState;
         }
-        case "TOGGLE_ACTIVE": {
+        case types.START_LOADING: {
+            return {...state, loading: true};
+        }
+        case types.STOP_LOADING: {
+            return {...state, loading: false};
+        }
+        case types.TOGGLE_ACTIVE: {
             let newState = {...state};
             newState.records = [...newState.records];
             newState.records[action.value] = {

@@ -1,7 +1,7 @@
 import React, {cloneElement, useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import GridRecord from "./GridRecord";
-import {filterGrid, toggleActive as toggleActiveAction} from "../../Actions";
+import {addData, filterGrid, startLoading, stopLoading, toggleChange} from "../../Actions";
 
 export default function GridComponent({children}) {
     const records = useSelector((state) => state.grid.records);
@@ -9,12 +9,27 @@ export default function GridComponent({children}) {
     const dispatcher = useDispatch();
     const filterInput = useRef(null);
 
+    let loadData = () => {
+        dispatcher(startLoading());
+        fetch('http://localhost:4730')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (json) {
+                dispatcher(addData(json.gridRecords));
+            })
+            .then(function () {
+                dispatcher(stopLoading);
+            })
+    }
+
     useEffect(() => {
         filterInput.current.focus();
-    }, []);
+        loadData();
+    },[]);
 
     let toggleActive = (index) => {
-        dispatcher(toggleActiveAction(index));
+        dispatcher(toggleChange(index));
     }
 
     let handleFilterChange = (e) => {
