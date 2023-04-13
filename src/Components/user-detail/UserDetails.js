@@ -1,13 +1,14 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import UserDetail from "./UserDetail";
+import {useParams} from "react-router-dom";
 
-export default function UserDetails(props) {
+export default function UserDetails() {
     let details = useSelector((state) => state.details);
-    // const id = props.match.params.id;
-    // if (id) {
-    //     details = details.filter(r => r.id === id);
-    // }
+    const {id} = useParams();
+    if (id) {
+        details = details.filter(r => r.id === id);
+    }
     return (
         <div>
             {details.map((detail, index) =>
