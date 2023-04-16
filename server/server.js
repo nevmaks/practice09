@@ -1,7 +1,13 @@
 var express = require('express');
 var app = express();
 
-app.all('/', function(req, res, next) {
+app.all('/grid', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
+app.all('/detail', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
@@ -32,28 +38,12 @@ var gridRecords = [
         skills:["Lisp", "Om", "JS"]
     }];
 
-var id = 3;
+app.get('/grid', function(req, res) {
+    setTimeout(() => res.json(gridRecords), 2000);
+});
 
-function generateData(){
-    id+=1;
-    gridRecords.push({firstName: "Generated", lastName: "Randomly", active: false, id: id});
-    detailsRecords.push({
-        id:id,
-        name:"GeneratedRandomly",
-        about:"Generated About",
-        hobby:"Generated Hobby",
-        skills:["G", "E", "N", "E", "R", "A", "T", "E", "D", id]
-    });
-}
-
-app.get('/', function(req, res) {
-    generateData();
-    //add artificial delay
-    setTimeout(() =>
-    res.json({
-        gridRecords:gridRecords,
-        detailsRecords:detailsRecords
-    }), 2000);
+app.get('/detail', function(req, res) {
+    setTimeout(() => res.json(detailsRecords), 2000);
 });
 
 app.listen(process.env.PORT || 4730);
