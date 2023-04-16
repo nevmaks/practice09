@@ -1,34 +1,53 @@
 import * as types from "../Constants";
 
-export function addData(value) {
+export function addDetailData(value) {
     return {
-        type: types.ADD_DATA,
+        type: types.DETAIL_ADD_DATA,
+        value
+    }
+}
+
+export function addGridData(value) {
+    return {
+        type: types.GRID_ADD_DATA,
         value
     }
 }
 
 export function filterGrid(value) {
     return {
-        type: types.FILTER,
+        type: types.GRID_FILTER,
         value
     }
 }
 
-export function startLoading() {
+export function startDetailLoading() {
     return {
-        type: types.START_LOADING
+        type: types.DETAIL_START_LOADING
     }
 }
 
-export function stopLoading() {
+export function startGridLoading() {
     return {
-        type: types.STOP_LOADING
+        type: types.GRID_START_LOADING
     }
 }
 
-export function toggleChange(value) {
+export function stopDetailLoading() {
     return {
-        type: types.TOGGLE_ACTIVE,
+        type: types.DETAIL_STOP_LOADING
+    }
+}
+
+export function stopGridLoading() {
+    return {
+        type: types.GRID_STOP_LOADING
+    }
+}
+
+export function toggleGridChange(value) {
+    return {
+        type: types.GRID_TOGGLE_ACTIVE,
         value
     }
 }
