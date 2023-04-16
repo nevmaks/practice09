@@ -1,29 +1,21 @@
-const detailsRecords = [
-    {
-        id: 1,
-        name: "John Doe",
-        about: "Nice guy",
-        hobby: "Likes drinking wine",
-        skills: ["html", "javascript", "redux"]
-    },
-    {
-        id: 2,
-        name: "Mary Moe",
-        about: "Cute girl",
-        hobby: "Likes playing xbox whole days long",
-        skills: ["Fortran", "Lua", "R#"]
-    },
-    {
-        id: 3,
-        name: "Peter Noname",
-        about: "Incognito",
-        hobby: "Likes to be invisible",
-        skills: ["hide","security","anonymous"]
-    }
-];
+import * as types from "../Constants";
 
-export function detailsReducer(state = detailsRecords, action) {
+let detailInitState = {
+    records: [],
+    loading: false
+}
+
+export function detailsReducer(state = detailInitState, action) {
     switch (action.type) {
+        case types.DETAIL_ADD_DATA: {
+            return {...state, records: [...action.value]};
+        }
+        case types.DETAIL_START_LOADING: {
+            return {...state, loading: true};
+        }
+        case types.DETAIL_STOP_LOADING: {
+            return {...state, loading: false};
+        }
         default:
             return state;
     }

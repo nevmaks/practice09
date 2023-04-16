@@ -1,7 +1,7 @@
 import React, {cloneElement, useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import GridRecord from "./GridRecord";
-import {addData, filterGrid, startLoading, stopLoading, toggleChange} from "../../Actions";
+import {addGridData, filterGrid, startGridLoading, stopGridLoading, toggleGridChange} from "../../Actions";
 
 export default function GridComponent({children}) {
     const records = useSelector((state) => state.grid.records);
@@ -10,16 +10,16 @@ export default function GridComponent({children}) {
     const filterInput = useRef(null);
 
     let loadData = () => {
-        dispatcher(startLoading());
-        fetch('http://localhost:4730')
+        dispatcher(startGridLoading());
+        fetch('http://localhost:4730/grid')
             .then(function (response) {
                 return response.json();
             })
             .then(function (json) {
-                dispatcher(addData(json.gridRecords));
+                dispatcher(addGridData(json));
             })
             .then(function () {
-                dispatcher(stopLoading);
+                dispatcher(stopGridLoading);
             })
     }
 
@@ -28,8 +28,8 @@ export default function GridComponent({children}) {
         loadData();
     },[]);
 
-    let toggleActive = (index) => {
-        dispatcher(toggleChange(index));
+    let toggleActive = (id) => {
+        dispatcher(toggleGridChange(id));
     }
 
     let handleFilterChange = (e) => {
@@ -38,8 +38,8 @@ export default function GridComponent({children}) {
 
     let gridRecords = records
         .filter((record) => record.firstName.toUpperCase().includes(filter.toUpperCase()))
-        .map((record, index) => {
-            return <GridRecord record={record} key={index} index={index} toggleActive={ toggleActive.bind(null, index) } />
+        .map((record) => {
+            return <GridRecord record={record} key={record.id} toggleActive={ toggleActive.bind(null, record.id) } />
     });
 
     return (

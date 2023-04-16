@@ -8,26 +8,25 @@ let gridInitState = {
 
 export function gridReducer(state = gridInitState, action) {
     switch (action.type) {
-        case types.ADD_DATA: {
+        case types.GRID_ADD_DATA: {
             return {...state, records: [...action.value]};
         }
-        case types.FILTER: {
+        case types.GRID_FILTER: {
             let newState = {...state};
             newState.filter = action.value;
             return newState;
         }
-        case types.START_LOADING: {
+        case types.GRID_START_LOADING: {
             return {...state, loading: true};
         }
-        case types.STOP_LOADING: {
+        case types.GRID_STOP_LOADING: {
             return {...state, loading: false};
         }
-        case types.TOGGLE_ACTIVE: {
+        case types.GRID_TOGGLE_ACTIVE: {
             let newState = {...state};
+            let index = newState.records.findIndex(record => record.id === action.value);
             newState.records = [...newState.records];
-            newState.records[action.value] = {
-                ...newState.records[action.value],
-                active: !newState.records[action.value].active
+            newState.records[index] = {...newState.records[index], active: !newState.records[index].active
             };
             return newState;
         }

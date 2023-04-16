@@ -14,12 +14,12 @@ GridRecord.defaultProps = {
     record: {firstName: "N/A", lastName: "N/A", active: false}
 }
 
-export default function GridRecord ({record, toggleActive, index}) {
+export default function GridRecord ({record, toggleActive}) {
     return (
         <tr>
             <td>{record.firstName}</td>
             <td>{record.lastName}</td>
-            <td><input type="checkbox" checked={record.active} onChange={() => toggleActive(index)}/></td>
+            <td><input type="checkbox" checked={record.active} onChange={() => toggleActive()}/></td>
         </tr>
     )
 }
